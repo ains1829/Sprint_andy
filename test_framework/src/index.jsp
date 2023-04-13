@@ -8,6 +8,6 @@
 </head>
 <body>
     <a href="findall?all=all">all</a>
-    <a href="test?all=insert">insert</a>
+    <a href="view?all=insert">view</a>
     <a href="andy?all=donne">donne</a>
 </body>

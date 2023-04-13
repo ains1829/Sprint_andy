@@ -21,4 +21,9 @@ public class Emp{
     public void add_some(){
         System.out.println("salut bogosy");
     }
+    @Methods("view")
+    public Models_view m_view_emp(){
+        Models_view m_v = new Models_view("test.jsp") ;
+        return m_v ; 
+    }
 }
