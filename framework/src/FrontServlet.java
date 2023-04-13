@@ -30,25 +30,31 @@ public class FrontServlet extends HttpServlet {
             Mapping mymapp = all.get(req.getServletPath().split("/")[1]) ; 
             out.print("classname = " + mymapp.getClassName() + "</br>");
             out.print("method = " + mymapp.getMethod() + "</br>");
-            // 
-            // Object objt = new Object() ;
             try {
                 out.print(about_s);
                 Class alls =(Class) about_s.elementAt(0) ;  
                 Object ob = alls.newInstance() ; 
                 Method my = (Method) about_s.elementAt(1) ; 
-                // out.println(ob.getSimpleName());
-                out.println("</br>");
-                out.print(my.getName());
-                out.println("</br>");
-                out.print(my.invoke(ob));
-                out.print("</br>");
-                Models_view Modelss = (Models_view) my.invoke(ob) ;
-                out.println(Modelss.getView());
-                RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
-                requests.forward(req,res) ; 
-                // Models_view redir =(Models_view) my.invoke(ob) ;
-            // out.println(redir.getView()) ;   
+                HashMap<String , Object> dats = new HashMap<String , Object>() ; 
+                if(my.getReturnType().getSimpleName().compareTo("Models_view") == 0){
+                    new Models_view().add_item(req.getServletPath().split("/")[1], mymapp.getMethod(), dats);
+                    String data = "datarecuperable" ; 
+                    System.out.println("model view exits");
+                    out.println("</br>");
+                    out.print(my.getName());
+                    out.println("</br>");
+                    out.print(my.invoke(ob));
+                    out.print("</br>");
+                    req.setAttribute("date" , dats) ; 
+                    Models_view Modelss = (Models_view) my.invoke(ob) ;
+                    out.println(Modelss.getView());
+                    // req.setAtrribute()
+                    RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
+                    requests.forward(req,res) ; 
+                }
+                else{
+                    out.println("no invoke");
+                }
             } catch (Exception e) {
                 // TODO: handle exception
                 e.printStackTrace();
