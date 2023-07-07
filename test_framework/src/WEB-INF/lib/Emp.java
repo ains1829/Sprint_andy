@@ -4,7 +4,8 @@ import etu1829.framework.files.*;
 import java.io.File;
 
 import etu1829.framework.annotation.*;
-@Model
+// @Model("normal")
+@Model(value = "singleton")
 public class Emp{
     @ForFields
     String Test ;
@@ -41,4 +42,11 @@ public class Emp{
     public String getNamePath(){
         return File.getPath() ;
     } 
+    int Nbr_appel ;
+    public int getNbr_appel() {
+        return Nbr_appel ;
+    }
+    public void setNbr_appel() {
+        this.Nbr_appel += 1;
+    }
 }   

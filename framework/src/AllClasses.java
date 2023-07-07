@@ -32,8 +32,8 @@ public class AllClasses  {
             File [] lesFiles = namePackage.listFiles() ;
             System.out.println("compte fichier = " + lesFiles.length);
             for (int i = 0; i < lesFiles.length; i++) {
-                System.out.println(paths.substring(67, paths.length())+"."+lesFiles[i].getName().substring(0, lesFiles[i].getName().length()-6));
-                all[i] =  Class.forName("etu1829.framework."+paths.substring(67, paths.length())+"."+lesFiles[i].getName().substring(0, lesFiles[i].getName().length()-6));
+                System.out.println(paths.substring(68, paths.length())+"."+lesFiles[i].getName().substring(0, lesFiles[i].getName().length()-6));
+                all[i] =  Class.forName("etu1829.framework."+paths.substring(68, paths.length())+"."+lesFiles[i].getName().substring(0, lesFiles[i].getName().length()-6));
             }   
         } catch (Exception e) {
             e.printStackTrace();
