@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import javax.servlet.*; 
 import javax.servlet.http.*;
-
+import etu1829.framework.annotation.*;
 import etu1829.framework.files.FileUpload;
 
 import java.util.*;
@@ -67,6 +67,26 @@ public class Utilitaire {
             e.printStackTrace();
         }
         return object ;
+    }
+    public Boolean verification_auth(HttpSession session , Class classe , Method inaction , String valeur , String connected ){
+        Auth authentication = inaction.getAnnotation(Auth.class);
+        boolean variable = false ;
+        boolean all = false;
+        if( authentication != null){
+            variable = true;
+            System.out.println("non auth");
+            // return false ;
+        }
+        if((session.getAttribute(valeur) != null ) && (session.getAttribute(connected) != null) && (variable == true)){
+            String val = (String) session.getAttribute(valeur);
+            if(val.compareTo("profil") == 0){
+                System.out.println("permission accorder");
+                return true;
+            }
+        }
+
+        return false ;
+
     }
 }
     

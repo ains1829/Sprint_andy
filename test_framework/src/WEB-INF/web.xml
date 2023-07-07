@@ -4,6 +4,16 @@
     <servlet> 
         <servlet-name>FrontServlet</servlet-name> 
         <servlet-class>etu1829.framework.servlet.FrontServlet</servlet-class> 
+        <init-param>
+            <param-name>profil</param-name>
+            <param-value>profil</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>connected</param-name>
+            <param-value>connected</param-value>
+        </init-param>
+        
         <multipart-config>
             <max-file-size>8000000</max-file-size>
             <max-request-size>8000000</max-request-size>

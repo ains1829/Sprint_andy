@@ -16,5 +16,5 @@
             width:150px;
         }
     </style>
-    <a href="andy">go</a>
+    <%-- <a href="andy">go</a> --%>
 </body>
