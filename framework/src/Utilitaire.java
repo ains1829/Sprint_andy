@@ -1,22 +1,15 @@
 package etu1829.framework;
 import java.sql.*;
 import java.io.*;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.*;
 import java.lang.reflect.Method;
 import javax.servlet.*; 
 import javax.servlet.http.*;
+
+import etu1829.framework.files.FileUpload;
+
 import java.util.*;
-import java.util.HashMap;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Vector;
-import etu1829.framework.Mapping;
-import etu1829.framework.show.*;
-import etu1829.framework.annotation.*;
-import java.lang.annotation.Annotation;
-import etu1829.framework.files.*;
+import java.io.InputStream;
 public class Utilitaire {
     
     public Utilitaire() {
@@ -28,72 +21,51 @@ public class Utilitaire {
         Object object = null ;
         try {
             object = classe.newInstance() ; 
+            System.out.println(object.getClass().getName()) ;
             Field [] fields = classe.getDeclaredFields() ;
             for (int j = 0; j < fields.length; j++) {
                 String parameter =  fields[j].getName();
                 if(req.getParameter(parameter) != null){
-                    String valeur = (String) req.getParameter(parameter) ; 
+                    String valeur = (String) req.getParameter(parameter) ;
                     System.out.println(valeur);
                     System.out.println(parameter);
-                    (object.getClass().getDeclaredMethod("set".concat(parameter) , String.class)).invoke(object, valeur ) ; 
+                    if(object.getClass().getDeclaredField(parameter).getType().getSimpleName().compareTo("FileUpload") == 0 ){
+                        System.out.println("classsess  = " + classe);
+                        System.out.println("fileupload ok");
+                        System.out.println(req.getParameter(parameter));
+                        // (object.getClass().getDeclaredMethod("set".concat(parameter) , String.class)).invoke(object, valeur ) ; 
+                    }else{
+                        (object.getClass().getDeclaredMethod("set".concat(parameter) , String.class)).invoke(object, valeur ) ; 
+                    }
+                }else{
+                    if(req.getPart(parameter) != null){
+                        Part filepart  = req.getPart(parameter) ;
+                        if(object.getClass().getDeclaredField(parameter).getType().getSimpleName().compareTo("FileUpload") == 0 ){
+                            InputStream inputStream = filepart.getInputStream();
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                byteArrayOutputStream.write(buffer, 0, bytesRead);
+                            }
+                            byte[] fileBytes = byteArrayOutputStream.toByteArray();
+                            byteArrayOutputStream.close();
+                            inputStream.close();
+                            String fileName = filepart.getSubmittedFileName();
+                            String path = "D:\\s4\\sprint9\\image\\" + fileName; // Spécifiez le chemin souhaité sur le serveur
+                            filepart.write(path);
+                            System.out.println("les byte ooh = " + fileBytes  + "  path ooh = " + path);
+                            FileUpload files = new FileUpload(fileName , path , fileBytes);
+                            (object.getClass().getDeclaredMethod("set".concat(parameter), FileUpload.class)).invoke(object, files ) ;
+                        }
+                    }
                 }
             } 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return object ; 
-    }
-    public String [] parametere(String answer){
-        String [] new_value = answer.split("__") ;
-        return new_value ; 
-    }
-    public boolean chek_split(String [] new_parameter , HttpServletRequest req ){
-        int compteur = 0 ; 
-        for (int l = 1; l < new_parameter.length; l++) {
-            if(req.getParameter(new_parameter[l])!=null){
-                compteur++ ;
-            }
-        }
-        if(compteur == new_parameter.length-1){
-            return true ;
-        }
-        return false ; 
-    }
-    public void get_annoter(HttpServletRequest req , String path) throws Exception{
-    String path_annoter  = (String) req.getServletPath() ; 
-    Class [] all =  new AllClasses().allClass(path) ;
-    int count = 0 ; 
-    for (int index = 0; index < all.length; index++) {
-        Method [] mymethod  =  all[index].getDeclaredMethods() ; 
-        Object instance = all[index].newInstance();
-        for (int i = 0; i < mymethod.length; i++) {
-            Annotation [] al =  mymethod[i].getAnnotations() ;
-            for (int j = 0; j < al.length; j++) {
-                Method [] content  = al[j].annotationType().getDeclaredMethods() ;
-                for (int k = 0; k < content.length; k++) {
-                    if(path_annoter.split("/")[1].compareTo((String)content[k].invoke(al[j])) == 0) {
-                        System.out.println(content[k].getName());
-                        System.out.println(mymethod[i].getName());
-                        Parameter [] para  = mymethod[i].getParameters();
-                        Object [] ob = new Object[para.length] ;
-                        for (int l = 0; l < para.length; l++) {
-                            String anno_para =   para[l].getAnnotation(Parametre.class).value();
-                            System.out.println(anno_para);
-                            if(req.getParameter(anno_para)!=null){
-                                ob[count] =(String) req.getParameter(anno_para) ;
-                                count ++ ;
-                            }
-                        }
-                        if(count == para.length){
-                            System.out.println("okokokok");
-                            mymethod[i].invoke(instance , ob) ;
-                        }
-                        
-                    }
-                }
-            } 
-        }
-    }
-    // return null;
+        return object ;
     }
 }
+    

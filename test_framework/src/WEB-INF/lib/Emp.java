@@ -1,4 +1,8 @@
 package etu1829.framework.test;
+import etu1829.framework.files.*;
+
+import java.io.File;
+
 import etu1829.framework.annotation.*;
 @Model
 public class Emp{
@@ -26,9 +30,15 @@ public class Emp{
         Models_view m_v = new Models_view("test.jsp") ;
         return m_v ; 
     }
-    @Methods("get_id_Emp__id")
-    public void find_by_id(@Parametre("id") String id , @Parametre("nom") String nom){
-        System.out.println("valeur de nom  = " + nom);
-        System.out.println("valeur d'id  = " + Integer.valueOf(id));
+
+    FileUpload File ;
+    public FileUpload getFile() {
+        return File;
     }
-}
+    public void setFile(FileUpload file) {
+        this.File = file;
+    }
+    public String getNamePath(){
+        return File.getPath() ;
+    } 
+}   
