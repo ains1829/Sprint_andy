@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import etu1829.framework.annotation.*;
 import etu1829.framework.files.FileUpload;
-
+import com.google.gson.Gson;
 import java.util.*;
 import java.io.InputStream;
 public class Utilitaire {
@@ -86,7 +86,11 @@ public class Utilitaire {
         }
 
         return false ;
-
+    }
+    public String Json(Object [] ob){
+        Gson gson = new Gson();
+        String jj = gson.toJson(ob);
+        return jj;
     }
 }
     

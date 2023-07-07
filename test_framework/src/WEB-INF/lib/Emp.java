@@ -1,8 +1,6 @@
 package etu1829.framework.test;
 import etu1829.framework.files.*;
-
 import java.io.File;
-
 import java.lang.reflect.Method;
 import etu1829.framework.annotation.*;
 // @Model("normal")
@@ -77,6 +75,15 @@ public class Emp{
         return mv;
        
     }
+    @Auth("profil")
+    @RestApi("rest")
+    @Methods("all_emps")
+    public Emp [] all_emp(){
+        Emp [] donne = new Emp[2];
+        donne[0] = new Emp("salut");
+        donne[1] = new Emp("bbabababab");
+        return donne;
+    }
     FileUpload File ;
     public FileUpload getFile() {
         return File;
@@ -94,5 +101,13 @@ public class Emp{
     public void setNbr_appel() {
         this.Nbr_appel += 1;
     }
-
+    public Emp(String aa){
+        this.Aa = aa;
+    }
+    public Emp(){}
+    // public String Json(Object [] emp){
+    //     Gson gson = new Gson();
+    //     String jsons = gson.toJson(emp);
+    //     return jsons;
+    // }   
 }   
