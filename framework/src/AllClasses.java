@@ -47,9 +47,6 @@ public class AllClasses  {
         Mapping map =  new Mapping(classname.getSimpleName() , method.getName()) ;
         HashMap<String, Mapping> hash = new HashMap<>(); 
         hash.put(name_path.split("/")[1], map) ; 
-        // System.out.println("contenu =" + hash.get("value"));
-        // Mapping test =  hash.get("value") ; 
-        // System.out.println(test.getMethod());
         return hash ; 
     }
 }

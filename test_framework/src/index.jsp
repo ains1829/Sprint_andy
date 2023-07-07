@@ -16,11 +16,5 @@
             width:150px;
         }
     </style>
-    <form action="run">
-        <input type="text" name="Nom">
-        <input type="text" name="Prenom">
-        <input type="date" name="Dates">
-        <input type="number" name="Age">
-        <input type="submit" value="valider">
-    </form>
+    <a href="get_id_Emp__id?id=2">salut</a>
 </body>

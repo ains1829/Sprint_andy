@@ -20,20 +20,27 @@ public class FrontServlet extends HttpServlet {
         String c = context.getRealPath("/WEB-INF/classes/etu1829/framework/test");
         out.println(c);
         try {
-            Class [] allClass = new AllClasses().allClass(c) ;
-            for (int i = 0; i < allClass.length; i++) {
-                Object object = allClass[i].newInstance() ; 
-                out.println(allClass[i].getSimpleName());
-                Object mymethod =  new Utilitaire().Save(allClass[i] , req);
-                Method [] all = mymethod.getClass().getDeclaredMethods() ;
-
-                // Method [] all = allClass[i].getDeclaredMethods() ;
-                for (int j = 0; j < all.length; j++) {
-                    if(all[j].getName().substring(0, 3).compareTo("get") == 0 ){
-                        out.println(all[j].invoke(mymethod));
-                    }
-                }
-            } 
+            // Class [] allClass = new AllClasses().allClass(c) ;
+            // for (int i = 0; i < allClass.length; i++) {
+            //     Object object = allClass[i].newInstance() ; 
+            //     out.println(allClass[i].getSimpleName());
+            //     Object mymethod =  new Utilitaire().Save(allClass[i] , req);
+            //     Method [] all = mymethod.getClass().getDeclaredMethods() ;
+            //     for (int j = 0; j < all.length; j++) {
+            //         if(all[j].getName().substring(0, 3).compareTo("get") == 0 ){
+            //             out.println(all[j].invoke(mymethod));
+            //         }
+            //     }
+            // } 
+            // System.out.println("path = " +  req.getServletPath());
+            // String path_annoter = (String) req.getServletPath() ;
+            // out.println(path_annoter.split("/")[1]);
+            // Class myclass = 
+            // // out.println(myclass.getName()); 
+            // out.println(myclass);
+            // Class myclass = 
+            // out.println(myclass);
+            new Utilitaire().get_annoter(req, c) ;
         } catch (Exception e) {
             e.printStackTrace();
         }
