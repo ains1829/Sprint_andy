@@ -5,6 +5,20 @@ public class Test {
         
         @ForFields(valeur = "champ")
         String monChamp;
+        String Nom ; 
+        int Age ; 
+        public int getAge() {
+            return Age;
+        }
+        public void setAge(String age) {
+            Age = Integer.valueOf(age);
+        }
+        public String getNom() {
+            return Nom;
+        }
+        public void setNom(String nom) {
+            Nom = nom;
+        }
         public Test() {
         }
         public String getMonChamp() {

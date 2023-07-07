@@ -7,7 +7,20 @@
     <title>Sprint1</title>
 </head>
 <body>
-    <a href="findall?all=all">all</a>
-    <a href="view?all=insert">view</a>
-    <a href="andy?all=donne">donne</a>
+    <style>
+        form{
+            display:flex ;
+            flex-direction:column;
+        }
+        form input{
+            width:150px;
+        }
+    </style>
+    <form action="run">
+        <input type="text" name="Nom">
+        <input type="text" name="Prenom">
+        <input type="date" name="Dates">
+        <input type="number" name="Age">
+        <input type="submit" value="valider">
+    </form>
 </body>
