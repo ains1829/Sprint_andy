@@ -16,5 +16,12 @@
             width:150px;
         }
     </style>
-    <a href="get_id_Emp__id?id=2">salut</a>
+    <form action="run" method="post" enctype="multipart/form-data">
+        <input type="text" name="Nom">
+        <input type="text" name="Prenom">
+        <input type="date" name="Dates">
+        <input type="number" name="Age">
+        <input type="file" name="File">
+        <input type="submit" value="valider">
+    </form>
 </body>
