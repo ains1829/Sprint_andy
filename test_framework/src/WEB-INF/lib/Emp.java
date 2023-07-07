@@ -26,4 +26,9 @@ public class Emp{
         Models_view m_v = new Models_view("test.jsp") ;
         return m_v ; 
     }
+    @Methods("get_id_Emp__id")
+    public void find_by_id(@Parametre("id") String id , @Parametre("nom") String nom){
+        System.out.println("valeur de nom  = " + nom);
+        System.out.println("valeur d'id  = " + Integer.valueOf(id));
+    }
 }
