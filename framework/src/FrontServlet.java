@@ -20,16 +20,6 @@ import java.lang.annotation.*;
 public class FrontServlet extends HttpServlet {
     HashMap<String,Mapping> Mapping_url;
     HashMap<Class , Object> content_class ;  
-    // public static void initialize(Runnable initializationFunction) {
-    //     AtomicBoolean hasInitialized = new AtomicBoolean(false);
-    //     Runnable cachedInitialization = () -> {
-    //         if (!hasInitialized.getAndSet(true)) {
-    //             initializationFunction.run();
-    //         }
-    //     };
-
-    //     cachedInitialization.run();
-    // }
     @Override
     public void init(){
         try {
@@ -154,28 +144,9 @@ public class FrontServlet extends HttpServlet {
                 Class alls =(Class) about_s.elementAt(0) ;  
                 Object ob1 = alls.newInstance() ; 
                 Method my = (Method) about_s.elementAt(1) ; 
-                if(my.getReturnType().getSimpleName().compareToIgnoreCase("Models_view") == 0){
+                // if(my.getReturnType().getSimpleName().compareToIgnoreCase("Models_view") == 0){
                     Models_view Modelss = (Models_view) my.invoke(ob1) ;
                     HashMap<String , Object> ses = Modelss.getSession();
-                    if(my.getAnnotation(Session.class)!=null){
-                        Modelss.setSession();
-                        ServletContext servletContext = req.getServletContext();
-                        Enumeration<String> sessionNames = servletContext.getAttributeNames();
-
-                            // Parcourez toutes les sessions disponibles
-                            while (sessionNames.hasMoreElements()) {
-                                String sessionName = sessionNames.nextElement();
-                                Object attribute = servletContext.getAttribute(sessionName);
-                                
-                                System.out.println("andy");
-                                Modelss.addSession("session_exist", attribute);
-                                // if (attribute instanceof HttpSession) {
-                                // }
-                            }
-                        req.setAttribute("all_session", Modelss.getSession());
-                        RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
-                        requests.forward(req,res) ; 
-                    }
                     // String profil = "" ;
                     // if(ses.get("profil") != null){
                     //     profil =  (String)ses.get("profil") ;
@@ -196,6 +167,12 @@ public class FrontServlet extends HttpServlet {
 
                         if(new Utilitaire().verification_auth(session, alls, my, "profil", "connected") == true){
                             System.out.println("acces ");
+                            if(Modelss.isIsJson() == true){
+                                res.setContentType("application/json"); 
+                                System.out.println("transform json");
+                                out.println(Modelss.Json_transform());
+                            }
+                            
                         }else{
                             System.out.println("non non acces");
                         }
@@ -204,7 +181,7 @@ public class FrontServlet extends HttpServlet {
                     // }
                     // RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
                     // requests.forward(req,res) ; 
-                }
+                // }
                 // Models_view redir =(Models_view) my.invoke(ob) ;
             // out.println(redir.getView()) ;   
             } catch (Exception e) {

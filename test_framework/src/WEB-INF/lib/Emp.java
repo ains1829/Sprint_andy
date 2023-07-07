@@ -50,7 +50,7 @@ public class Emp{
     public Models_view  deptList() throws Exception {
         Models_view mv = new Models_view("Emp.jsp");
         try {
-            // mv.setView();
+            mv.setIsJson(true);
             mv.setDonnee();
             String[] list = {"ANdy" , "MIrao" , "Miarituana"};
             mv.add_items("list", list);
@@ -59,17 +59,23 @@ public class Emp{
             throw e;
         }
         return mv;
+       
     }
-    @Session("session")
-    @Methods("get_session")
-    public Models_view  get_session() throws Exception {
-        Models_view mv = new Models_view("Session.jsp");
+    @Auth("profil")
+    @Methods("list_emp_no_json")
+    public Models_view  deptList_no_json() throws Exception {
+        Models_view mv = new Models_view("Emp.jsp");
         try {
+            mv.setIsJson(false);
+            mv.setDonnee();
+            String[] list = {"ANdy" , "MIrao" , "Miarituana"};
+            mv.add_items("list", list);
         } catch (Exception e) {
             // TODO: handle exception
             throw e;
         }
         return mv;
+       
     }
     FileUpload File ;
     public FileUpload getFile() {
