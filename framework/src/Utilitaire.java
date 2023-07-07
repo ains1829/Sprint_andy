@@ -49,6 +49,7 @@ public class Utilitaire {
                             while ((bytesRead = inputStream.read(buffer)) != -1) {
                                 byteArrayOutputStream.write(buffer, 0, bytesRead);
                             }
+
                             byte[] fileBytes = byteArrayOutputStream.toByteArray();
                             byteArrayOutputStream.close();
                             inputStream.close();
