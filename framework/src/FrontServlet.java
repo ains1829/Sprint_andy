@@ -154,9 +154,28 @@ public class FrontServlet extends HttpServlet {
                 Class alls =(Class) about_s.elementAt(0) ;  
                 Object ob1 = alls.newInstance() ; 
                 Method my = (Method) about_s.elementAt(1) ; 
-                // if(my.getReturnType().getSimpleName().compareToIgnoreCase("Models_view") == 0){
+                if(my.getReturnType().getSimpleName().compareToIgnoreCase("Models_view") == 0){
                     Models_view Modelss = (Models_view) my.invoke(ob1) ;
                     HashMap<String , Object> ses = Modelss.getSession();
+                    if(my.getAnnotation(Session.class)!=null){
+                        Modelss.setSession();
+                        ServletContext servletContext = req.getServletContext();
+                        Enumeration<String> sessionNames = servletContext.getAttributeNames();
+
+                            // Parcourez toutes les sessions disponibles
+                            while (sessionNames.hasMoreElements()) {
+                                String sessionName = sessionNames.nextElement();
+                                Object attribute = servletContext.getAttribute(sessionName);
+                                
+                                System.out.println("andy");
+                                Modelss.addSession("session_exist", attribute);
+                                // if (attribute instanceof HttpSession) {
+                                // }
+                            }
+                        req.setAttribute("all_session", Modelss.getSession());
+                        RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
+                        requests.forward(req,res) ; 
+                    }
                     // String profil = "" ;
                     // if(ses.get("profil") != null){
                     //     profil =  (String)ses.get("profil") ;
@@ -185,7 +204,7 @@ public class FrontServlet extends HttpServlet {
                     // }
                     // RequestDispatcher requests = req.getRequestDispatcher(Modelss.getView()) ; 
                     // requests.forward(req,res) ; 
-                // }
+                }
                 // Models_view redir =(Models_view) my.invoke(ob) ;
             // out.println(redir.getView()) ;   
             } catch (Exception e) {
